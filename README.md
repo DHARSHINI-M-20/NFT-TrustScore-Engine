@@ -44,7 +44,7 @@ This can be improved later using more advanced machine learning models.
 ## How to Run the Project
 
 Clone the repository:
-git clone https://github.com/YOUR-USERNAME/NFT-TrustScore-Engine.git
+git clone https://github.com/DHARSHINI-M-20/NFT-TrustScore-Engine.git
 cd NFT-TrustScore-Engine
 
 Setup blockchain:
@@ -77,7 +77,7 @@ npm start
 
 ## Author
 
-Aruthra B, Dharshini M,Kanishka R, Raja Rageshwari. 
+Aruthra B, Dharshini M, Kanishka R, Raja Rageshwari.
 
 ## Note
 
