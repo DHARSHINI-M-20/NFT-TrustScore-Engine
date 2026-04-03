@@ -17,6 +17,11 @@ const hasValidPrivateKey =
 
 const networks = {};
 
+networks.localhost = {
+  type: "http",
+  url: "http://127.0.0.1:8545",
+};
+
 if (amoyRpcUrl) {
   networks.amoy = {
     type: "http",

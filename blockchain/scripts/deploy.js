@@ -1,6 +1,7 @@
 import { network } from "hardhat";
 
 async function main() {
+  const activeNetwork = process.env.HARDHAT_NETWORK ?? "hardhat";
   const rawPrivateKey = process.env.PRIVATE_KEY?.trim();
   const normalizedPrivateKey =
     rawPrivateKey == null || rawPrivateKey === ""
@@ -9,11 +10,14 @@ async function main() {
         ? rawPrivateKey
         : `0x${rawPrivateKey}`;
 
-  if (!process.env.AMOY_RPC_URL) {
+  if (activeNetwork === "amoy" && !process.env.AMOY_RPC_URL) {
     throw new Error("Missing AMOY_RPC_URL in .env");
   }
 
-  if (normalizedPrivateKey == null || !/^0x[0-9a-fA-F]{64}$/.test(normalizedPrivateKey)) {
+  if (
+    activeNetwork === "amoy" &&
+    (normalizedPrivateKey == null || !/^0x[0-9a-fA-F]{64}$/.test(normalizedPrivateKey))
+  ) {
     throw new Error(
       "PRIVATE_KEY in .env must be a 64-character hex private key, usually starting with 0x",
     );
@@ -27,7 +31,7 @@ async function main() {
   }
 
   const balance = await ethers.provider.getBalance(signer.address);
-  if (balance === 0n) {
+  if (activeNetwork === "amoy" && balance === 0n) {
     throw new Error(
       `Wallet ${signer.address} has 0 AMOY test MATIC. Fund it from a Polygon Amoy faucet before deploying.`,
     );
@@ -39,6 +43,8 @@ async function main() {
   await nft.waitForDeployment();
 
   console.log("NFT deployed to:", await nft.getAddress());
+  console.log("Network:", activeNetwork);
+  console.log("Deployer:", signer.address);
 }
 
 main().catch((error) => {
